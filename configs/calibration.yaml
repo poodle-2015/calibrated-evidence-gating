@@ -1,0 +1,5 @@
+# The Gate emits a continuous insufficiency score. We choose a single threshold on
+# CALIBRATION roots that maximizes insufficient recall while meeting the target below,
+# then freeze it for TEST roots. Higher score means more insufficient.
+
+answerable_recall_target: 0.95

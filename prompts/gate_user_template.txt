@@ -1,0 +1,10 @@
+Decide whether the context is sufficient for answering the question.
+Return strict JSON only:
+{{"sufficiency": "sufficient|insufficient", "diagnosis_type": "none|missing_required_support|single_hop_only|irrelevant_context"}}
+Use "sufficient" only when the complete multi-hop evidence chain is present.
+Use "insufficient" when any required hop is missing or the context is irrelevant.
+
+CONTEXT:
+{context}
+
+QUESTION: {question}

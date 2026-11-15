@@ -1,0 +1,36 @@
+# Source dataset paths and construction settings.
+# Dataset paths are resolved relative to THIS config file's directory (configs/) unless
+# absolute. The defaults expect the official dev files under data/ at the repository root;
+# change them to wherever you placed the public corpora.
+#
+# Each evaluation source is split 50/50 by root into calibration and test pools.
+
+seed: 7                       # data construction seed (paper: "Data construction uses seed 7")
+
+construction:
+  max_paragraphs: 6           # cap context at six paragraphs ...
+  max_sentences_per_paragraph: 5   # ... of five sentences each
+  num_distractors: 2          # two ranked non-support paragraphs
+  title_overlap_weight: 2.0   # double weight for question-overlap matches in the title
+  min_hops: 2                 # every answerable variant needs >= 2 gold support paragraphs
+  # A root yields up to five variants; a variant is emitted only when well-formed
+  # (e.g. one-hop-of-evidence needs >= 2 support pointers).
+
+split:
+  # Sort root ids by MD5 and take the first half for calibration. Variants never cross.
+  calibration_fraction: 0.5
+
+datasets:
+  hotpotqa:
+    schema: hotpot            # id, question, answer, context[[title,[sents]]], supporting_facts[[title,sid]]
+    eval_path: ../data/hotpotqa_distractor_validation.jsonl
+    eval_roots: 1002
+  2wiki:
+    schema: hotpot            # 2Wiki shares the HotpotQA context/supporting_facts schema
+    eval_path: ../data/2wikimultihopqa_distractor_dev.jsonl
+    eval_roots: 1000
+  musique:
+    schema: musique           # id, question, answer, paragraphs[{title,paragraph_text,is_supporting}]
+    eval_path: ../data/musique_ans_v1.0_dev.jsonl
+    eval_roots: 1000
+    eval_hop_strata: {2: 518, 3: 314, 4: 168}   # eval pool stratified to the dev hop distribution

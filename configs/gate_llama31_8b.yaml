@@ -1,0 +1,7 @@
+# Gate inference configuration. The adapter is supplied to scripts/score_gate.py.
+# Scoring compares the average label log-likelihoods after the common JSON prefix;
+# no generated text is parsed.
+
+model:
+  base: meta-llama/Llama-3.1-8B-Instruct
+  dtype: bfloat16
